@@ -1,0 +1,61 @@
+".source.js, .source.jsx, .source.ts, .source.tsx":
+  "flow: React.Node children":
+    prefix: "ftnode"
+    leftLabelHTML: '<span style="color:#1B81B6">Ⓢ</span>'
+    rightLabelHTML: '<span style="color:#ffc737">flow</span> React.Node'
+    body: "React.ChildrenArray<${1:void|null|boolean|string|number|React.Element<any>}>"
+  "flow: React.Node":
+    prefix: "ftelement"
+    leftLabelHTML: '<span style="color:#1B81B6">Ⓢ</span>'
+    rightLabelHTML: '<span style="color:#ffc737">flow</span> React.Element'
+    body: "React.Element<typeof ${1:Component|'div'}>"
+  "flow: React.ChildrenArray":
+    prefix: "ftchildren"
+    leftLabelHTML: '<span style="color:#1B81B6">Ⓢ</span>'
+    rightLabelHTML: '<span style="color:#ffc737">flow</span> React.ChildrenArray'
+    body: "React.ChildrenArray<${1:T}>"
+  "flow: React.ComponentType":
+    prefix: "ftcomponent"
+    leftLabelHTML: '<span style="color:#1B81B6">Ⓢ</span>'
+    rightLabelHTML: '<span style="color:#ffc737">flow</span> React.ComponentType<Props>'
+    body: "React.ComponentType<Props>"
+  "flow: React.StatelessFunctionalComponent":
+    prefix: "ftStatelessFunctionalComponent"
+    leftLabelHTML: '<span style="color:#1B81B6">Ⓢ</span>'
+    rightLabelHTML: '<span style="color:#ffc737">flow</span> React.StatelessFunctionalComponent'
+    body: "React.StatelessFunctionalComponent<Props>"
+  "flow: React.ElementType":
+    prefix: "ftElementType"
+    leftLabelHTML: '<span style="color:#1B81B6">Ⓢ</span>'
+    rightLabelHTML: '<span style="color:#ffc737">flow</span> React.ElementType'
+    body: "React.ElementType"
+  "flow: React.Key":
+    prefix: "ftkey"
+    leftLabelHTML: '<span style="color:#1B81B6">Ⓢ</span>'
+    rightLabelHTML: '<span style="color:#ffc737">flow</span> React.Keys<T>'
+    body: "React.Key"
+  "flow: React.Ref":
+    prefix: "ftref"
+    leftLabelHTML: '<span style="color:#1B81B6">Ⓢ</span>'
+    rightLabelHTML: '<span style="color:#ffc737">flow</span> React.Ref'
+    body: "React.Ref<typeof ${1:Component}>"
+  "flow: React.ElementProps":
+    prefix: "ftElementProps"
+    leftLabelHTML: '<span style="color:#1B81B6">Ⓢ</span>'
+    rightLabelHTML: '<span style="color:#ffc737">flow</span> React.ElementProps'
+    body: "React.ElementProps<typeof ${1:Component}>"
+  "flow: React.ElementConfig":
+    prefix: "ftElementConfig"
+    leftLabelHTML: '<span style="color:#1B81B6">Ⓢ</span>'
+    rightLabelHTML: '<span style="color:#ffc737">flow</span> React.ElementConfig'
+    body: "React.ElementConfig<typeof ${1:Component}>"
+  "flow: React.ElementRef":
+    prefix: "ftElementRef"
+    leftLabelHTML: '<span style="color:#1B81B6">Ⓢ</span>'
+    rightLabelHTML: '<span style="color:#ffc737">flow</span> React.ElementRef'
+    body: "React.ElementRef<typeof ${1:Component}>"
+  "flow: StyleSheet.style":
+    prefix: "ftStyle"
+    leftLabelHTML: '<span style="color:#1B81B6">Ⓢ</span>'
+    rightLabelHTML: '<span style="color:#ffc737">flow</span> StyleObj TYPE'
+    body: "import type { StyleObj } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';\n"
