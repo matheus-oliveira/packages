@@ -1,48 +1,114 @@
-'use strict';var _ActiveEditorRegistry;
+"use strict";
 
+function _ActiveEditorRegistry() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/ActiveEditorRegistry"));
 
+  _ActiveEditorRegistry = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _debounced() {
+  const data = require("../../../../nuclide-commons-atom/debounced");
 
+  _debounced = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _textEditor() {
+  const data = require("../../../../nuclide-commons-atom/text-editor");
 
+  _textEditor = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _createPackage() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/createPackage"));
 
-function _load_ActiveEditorRegistry() {return _ActiveEditorRegistry = _interopRequireDefault(require('../../../../nuclide-commons-atom/ActiveEditorRegistry'));}var _debounced;
-function _load_debounced() {return _debounced = require('../../../../nuclide-commons-atom/debounced');}var _textEditor;
-function _load_textEditor() {return _textEditor = require('../../../../nuclide-commons-atom/text-editor');}var _createPackage;
-function _load_createPackage() {return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));}var _UniversalDisposable;
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _analytics;
-function _load_analytics() {return _analytics = _interopRequireDefault(require('../../../../nuclide-commons/analytics'));}var _destroyItemWhere;
+  _createPackage = function () {
+    return data;
+  };
 
-function _load_destroyItemWhere() {return _destroyItemWhere = require('../../../../nuclide-commons-atom/destroyItemWhere');}var _OutlineViewPanel;
+  return data;
+}
 
-function _load_OutlineViewPanel() {return _OutlineViewPanel = require('./OutlineViewPanel');}var _createOutlines;
-function _load_createOutlines() {return _createOutlines = require('./createOutlines');}
-var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
-                                                                                                                                                           * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                                                                           * All rights reserved.
-                                                                                                                                                           *
-                                                                                                                                                           * This source code is licensed under the BSD-style license found in the
-                                                                                                                                                           * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                                                           * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                                                           *
-                                                                                                                                                           * 
-                                                                                                                                                           * @format
-                                                                                                                                                           */class Activation {constructor() {this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(
-    this.registerOpenerAndCommand());
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/UniversalDisposable"));
 
+  _UniversalDisposable = function () {
+    return data;
+  };
 
-    this._editorService = new (_ActiveEditorRegistry || _load_ActiveEditorRegistry()).default(
-    (provider, editor) => {
-      (_analytics || _load_analytics()).default.track('outline-view-getoutline');
-      return provider.getOutline(editor);
-    },
-    {},
-    getActiveEditorRegistryEventSources());
+  return data;
+}
 
+function _analytics() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/analytics"));
+
+  _analytics = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _destroyItemWhere() {
+  const data = require("../../../../nuclide-commons-atom/destroyItemWhere");
+
+  _destroyItemWhere = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _OutlineViewPanel() {
+  const data = require("./OutlineViewPanel");
+
+  _OutlineViewPanel = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _createOutlines() {
+  const data = require("./createOutlines");
+
+  _createOutlines = function () {
+    return data;
+  };
+
+  return data;
+}
+
+var _RxMin = require("rxjs/bundles/Rx.min.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+class Activation {
+  constructor() {
+    this._disposables = new (_UniversalDisposable().default)(this.registerOpenerAndCommand());
+    this._editorService = new (_ActiveEditorRegistry().default)((provider, editor) => provider.getOutline(editor), {}, getActiveEditorRegistryEventSources());
   }
 
   dispose() {
@@ -54,29 +120,22 @@ var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');function _interopReq
   }
 
   _createOutlineViewPanelState() {
-    (_analytics || _load_analytics()).default.track('outline-view-show');
-    return new (_OutlineViewPanel || _load_OutlineViewPanel()).OutlineViewPanelState((0, (_createOutlines || _load_createOutlines()).createOutlines)(this._editorService));
+    _analytics().default.track('outline-view-show');
+
+    return new (_OutlineViewPanel().OutlineViewPanelState)((0, _createOutlines().createOutlines)(this._editorService));
   }
 
   registerOpenerAndCommand() {
-    const commandDisposable = atom.commands.add(
-    'atom-workspace',
-    'outline-view:toggle',
-    () => {
-      atom.workspace.toggle((_OutlineViewPanel || _load_OutlineViewPanel()).WORKSPACE_VIEW_URI);
+    const commandDisposable = atom.commands.add('atom-workspace', 'outline-view:toggle', () => {
+      atom.workspace.toggle(_OutlineViewPanel().WORKSPACE_VIEW_URI);
     });
-
-    return new (_UniversalDisposable || _load_UniversalDisposable()).default(
-    atom.workspace.addOpener(uri => {
-      if (uri === (_OutlineViewPanel || _load_OutlineViewPanel()).WORKSPACE_VIEW_URI) {
+    return new (_UniversalDisposable().default)(atom.workspace.addOpener(uri => {
+      if (uri === _OutlineViewPanel().WORKSPACE_VIEW_URI) {
         return this._createOutlineViewPanelState();
       }
-    }),
-    () => {
-      (0, (_destroyItemWhere || _load_destroyItemWhere()).destroyItemWhere)(item => item instanceof (_OutlineViewPanel || _load_OutlineViewPanel()).OutlineViewPanelState);
-    },
-    commandDisposable);
-
+    }), () => {
+      (0, _destroyItemWhere().destroyItemWhere)(item => item instanceof _OutlineViewPanel().OutlineViewPanelState);
+    }, commandDisposable);
   }
 
   deserializeOutlineViewPanelState() {
@@ -85,27 +144,26 @@ var _rxjsBundlesRxMinJs = require('rxjs/bundles/Rx.min.js');function _interopReq
 
   getOutlineViewResultsStream() {
     return {
-      getResultsStream: () => this._editorService.getResultsStream() };
+      getResultsStream: () => this._editorService.getResultsStream()
+    };
+  }
 
-  }}
+}
 
-
-(0, (_createPackage || _load_createPackage()).default)(module.exports, Activation);
-
-// TODO this can be removed once we no longer want to support versions of Atom less than 1.17.0
+(0, _createPackage().default)(module.exports, Activation); // TODO this can be removed once we no longer want to support versions of Atom less than 1.17.0
 // (D4973408)
+
 function getActiveEditorRegistryEventSources() {
   return {
-    activeEditors: (0, (_debounced || _load_debounced()).observeActivePaneItemDebounced)().
-    switchMap(item => {
-      if ((0, (_textEditor || _load_textEditor()).isValidTextEditor)(item)) {
-        return _rxjsBundlesRxMinJs.Observable.of(item);
-      } else if (item instanceof (_OutlineViewPanel || _load_OutlineViewPanel()).OutlineViewPanelState) {
+    activeEditors: (0, _debounced().observeActivePaneItemDebounced)().switchMap(item => {
+      if ((0, _textEditor().isValidTextEditor)(item)) {
+        return _RxMin.Observable.of(item);
+      } else if (item instanceof _OutlineViewPanel().OutlineViewPanelState) {
         // Ignore switching to the outline view.
-        return _rxjsBundlesRxMinJs.Observable.empty();
+        return _RxMin.Observable.empty();
       }
-      return _rxjsBundlesRxMinJs.Observable.of(null);
-    }).
-    distinctUntilChanged() };
 
+      return _RxMin.Observable.of(null);
+    }).distinctUntilChanged()
+  };
 }

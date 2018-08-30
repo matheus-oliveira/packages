@@ -1,58 +1,56 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.default =
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = openPreview;
 
+function _goToLocation() {
+  const data = require("../nuclide-commons-atom/go-to-location");
 
+  _goToLocation = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _paneItem() {
+  const data = require("../nuclide-commons-atom/pane-item");
 
+  _paneItem = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _promise2() {
+  const data = require("../nuclide-commons/promise");
 
+  _promise2 = function () {
+    return data;
+  };
 
+  return data;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-openPreview;var _goToLocation;function _load_goToLocation() {return _goToLocation = require('../nuclide-commons-atom/go-to-location');}var _paneItem;function _load_paneItem() {return _paneItem = require('../nuclide-commons-atom/pane-item');}var _promise2;function _load_promise() {return _promise2 = require('../nuclide-commons/promise');}let preview; /**
-                                                                                                                                                                                                                                                                                                                                                                 * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                                                                                                                                                                                                                                                                                 * All rights reserved.
-                                                                                                                                                                                                                                                                                                                                                                 *
-                                                                                                                                                                                                                                                                                                                                                                 * This source code is licensed under the BSD-style license found in the
-                                                                                                                                                                                                                                                                                                                                                                 * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                                                                                                                                                                                                                                                                 * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                                                                                                                                                                                                                                                                 *
-                                                                                                                                                                                                                                                                                                                                                                 * 
-                                                                                                                                                                                                                                                                                                                                                                 * @format
-                                                                                                                                                                                                                                                                                                                                                                 */let marker;let originalPoint;let lastOpenablePreview;let activeOpenableId = 0; // Previews a particular destination using goToLocation. This may involve opening
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+let preview;
+let marker;
+let originalPoint;
+let lastOpenablePreview;
+let activeOpenableId = 0; // Previews a particular destination using goToLocation. This may involve opening
 // a new pane if the destination uri is not the active item. However, if the
 // user has disabled preview panes, we won't show them a preview.
 // openPreview supports being called many times, and it deallocates prior
@@ -60,31 +58,43 @@ openPreview;var _goToLocation;function _load_goToLocation() {return _goToLocatio
 // to the original destination when cancelled. This *could* be implemented using
 // a stack, but this simpler implementation just holds global references and restores
 // focus using the active item and position that was present when the first preview occurred.
+
 function openPreview(uri, // $FlowIgnore
-options = {}, openDelay = 0) {const { line, column } = options;const thisOpenableId = ++activeOpenableId;if (lastOpenablePreview != null) {lastOpenablePreview.cancel();}let canceled;let confirmed;const activeItem = atom.workspace.getActivePaneItem();const activeEditor = atom.workspace.getActiveTextEditor();if (preview == null && activeItem != null) {
+options = {}, openDelay = 0) {
+  const {
+    line,
+    column
+  } = options;
+  const thisOpenableId = ++activeOpenableId;
+
+  if (lastOpenablePreview != null) {
+    lastOpenablePreview.cancel();
+  }
+
+  let canceled;
+  let confirmed;
+  const activeItem = atom.workspace.getActivePaneItem();
+  const activeEditor = atom.workspace.getActiveTextEditor();
+
+  if (preview == null && activeItem != null) {
     // this is the first preview in a potential "stack" of previews.
     // persist the current position so we can return to it later.
     originalPoint = {
       item: activeItem,
-      point:
-      activeItem === activeEditor && activeEditor != null ?
-      activeEditor.getCursorBufferPosition() :
-      null };
-
+      point: activeItem === activeEditor && activeEditor != null ? activeEditor.getCursorBufferPosition() : null
+    };
   }
 
   const isWithinSameFile = uri === (activeEditor && activeEditor.getURI());
-  const arePendingPanesEnabled = Boolean(
-  atom.config.get('core.allowPendingPaneItems'));
-
-
+  const arePendingPanesEnabled = Boolean(atom.config.get('core.allowPendingPaneItems'));
   let promise;
+
   if (isWithinSameFile || arePendingPanesEnabled) {
     // a common case is scrolling through many results, cancelling one after
     // the other. give things a chance to cancel before going throught the work
     // of rendering a preview
-    promise = (0, (_promise2 || _load_promise()).delayTime)(openDelay).then(() => {
-      if (preview != null && (0, (_paneItem || _load_paneItem()).isPending)(preview) && preview.isModified()) {
+    promise = (0, _promise2().delayTime)(openDelay).then(() => {
+      if (preview != null && (0, _paneItem().isPending)(preview) && preview.isModified()) {
         // To avoid leaving behind a "Save changes before close?" dialog, forcefully
         // destroy any pane that is both pending *and* modified
         preview.destroy();
@@ -93,31 +103,26 @@ options = {}, openDelay = 0) {const { line, column } = options;const thisOpenabl
       if (canceled) {
         return Promise.resolve();
       } else {
-        return (0, (_goToLocation || _load_goToLocation()).goToLocation)(uri, {
+        return (0, _goToLocation().goToLocation)(uri, {
           line,
           column,
           center: true,
           activateItem: true,
           activatePane: false,
           pending: true,
-          moveCursor: false }).
-        then(newPreview => {
-          if (
-          canceled &&
-          (0, (_paneItem || _load_paneItem()).isPending)(newPreview) &&
-          // don't destroy the pane if it's not new (e.g. within the same file --
+          moveCursor: false
+        }).then(newPreview => {
+          if (canceled && (0, _paneItem().isPending)(newPreview) && // don't destroy the pane if it's not new (e.g. within the same file --
           // like a symbol within the originating file)
-          originalPoint != null &&
-          newPreview !== originalPoint.item)
-          {
+          originalPoint != null && newPreview !== originalPoint.item) {
             newPreview.destroy();
             return;
-          }
-
-          // the pane may have been reused: e.g. previewing a line in the same file
+          } // the pane may have been reused: e.g. previewing a line in the same file
           // so make sure it wasn't. Then destroy the old preview if it's not the
           // original pane.
-          if (preview != null && (0, (_paneItem || _load_paneItem()).isPending)(preview) && preview !== newPreview) {
+
+
+          if (preview != null && (0, _paneItem().isPending)(preview) && preview !== newPreview) {
             preview.destroy();
           }
 
@@ -126,19 +131,18 @@ options = {}, openDelay = 0) {const { line, column } = options;const thisOpenabl
             marker = null;
           }
 
-          preview = newPreview;
-
-          // highlight the relevant line (and possibly point if there's a column)
+          preview = newPreview; // highlight the relevant line (and possibly point if there's a column)
           // if a line is provided in the options
+
           if (line != null) {
             marker = preview.markBufferPosition({
               row: line,
-              column: column == null ? 0 : column });
-
+              column: column == null ? 0 : column
+            });
             preview.decorateMarker(marker, {
               type: 'line',
-              class: 'nuclide-line-preview' });
-
+              class: 'nuclide-line-preview'
+            });
           }
 
           return newPreview;
@@ -159,17 +163,13 @@ options = {}, openDelay = 0) {const { line, column } = options;const thisOpenabl
       }
 
       if (confirmed) {
-        throw new Error(
-        'A preview cannot be cancelled after it has been confirmed.');
-
+        throw new Error('A preview cannot be cancelled after it has been confirmed.');
       }
 
-      if (
-      preview != null && (
-      originalPoint == null || preview !== originalPoint.item))
-      {
+      if (preview != null && (originalPoint == null || preview !== originalPoint.item)) {
         preview.destroy();
       }
+
       preview = null;
 
       if (marker != null) {
@@ -177,29 +177,22 @@ options = {}, openDelay = 0) {const { line, column } = options;const thisOpenabl
         marker = null;
       }
     },
+
     confirm() {
       if (activeOpenableId !== thisOpenableId) {
         // another preview is currently being shown
-        throw new Error(
-        'Another preview has become active after this one was shown. Cannot confirm.');
-
+        throw new Error('Another preview has become active after this one was shown. Cannot confirm.');
       }
 
       if (canceled) {
-        throw new Error(
-        'A preview cannot be confirmed after it has been cancelled');
-
+        throw new Error('A preview cannot be confirmed after it has been cancelled');
       }
 
       confirmed = true;
-
-      const goToLocationPromise = (0, (_goToLocation || _load_goToLocation()).goToLocation)(uri, options).then(newEditor => {
+      const goToLocationPromise = (0, _goToLocation().goToLocation)(uri, options).then(newEditor => {
         newEditor.terminatePendingState();
-        if (
-        preview != null &&
-        preview !== newEditor && (
-        originalPoint == null || preview !== originalPoint.item))
-        {
+
+        if (preview != null && preview !== newEditor && (originalPoint == null || preview !== originalPoint.item)) {
           // This case seems very unlikely: if the editor opened on confirmation
           // is not the same editor that was used for the preview pane, destroy
           // the preview pane
@@ -211,14 +204,14 @@ options = {}, openDelay = 0) {const { line, column } = options;const thisOpenabl
         marker.destroy();
         marker = null;
       }
-      preview = null;
 
+      preview = null;
       return goToLocationPromise;
     },
+
     // exported for test
-    _promise: promise };
-
-
+    _promise: promise
+  };
   lastOpenablePreview = openablePreview;
   return openablePreview;
 }

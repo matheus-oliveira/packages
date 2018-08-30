@@ -1,27 +1,10 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.default =
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = parseOpenable;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-parseOpenable; // From the nuclide-fuzzy-filename-provider module
-// TODO: Remove that module when Dash and openables replace it
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -32,4 +15,16 @@ parseOpenable; // From the nuclide-fuzzy-filename-provider module
  *
  * 
  * @format
- */function parseOpenable(query) {const [uri, line, column] = query.split(/:+/);const lineNumber = parseInt(line, 10);const columnNumber = parseInt(column, 10);return { uri, line: !Number.isNaN(lineNumber) ? lineNumber - 1 : undefined, column: !Number.isNaN(columnNumber) ? columnNumber - 1 : undefined };}
+ */
+// From the nuclide-fuzzy-filename-provider module
+// TODO: Remove that module when Dash and openables replace it
+function parseOpenable(query) {
+  const [uri, line, column] = query.split(/:+/);
+  const lineNumber = parseInt(line, 10);
+  const columnNumber = parseInt(column, 10);
+  return {
+    uri,
+    line: !Number.isNaN(lineNumber) ? lineNumber - 1 : undefined,
+    column: !Number.isNaN(columnNumber) ? columnNumber - 1 : undefined
+  };
+}

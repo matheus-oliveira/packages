@@ -1,29 +1,10 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.default =
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = highlightText;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-highlightText; // intended to be used as a tagged template literal, where the interpolated
-// pieces are highlighted in the returned set of matches:
-//
-// e.g. highlightText`not highlighted ${'but this is'} and this is not`;
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -34,12 +15,27 @@ highlightText; // intended to be used as a tagged template literal, where the in
  *
  *  strict
  * @format
- */function highlightText(unhighlightedStrings, ...highlightedStrings) {let concattenated = '';const highlightedRanges = [];for (let i = 0; i < unhighlightedStrings.length; i++) {concattenated += unhighlightedStrings[i]; // the two lists of strings may be uneven by one
-    if (highlightedStrings[i] != null) {const start = concattenated.length;concattenated += highlightedStrings[i];highlightedRanges.push([start, concattenated.length]);}
+ */
+// intended to be used as a tagged template literal, where the interpolated
+// pieces are highlighted in the returned set of matches:
+//
+// e.g. highlightText`not highlighted ${'but this is'} and this is not`;
+function highlightText(unhighlightedStrings, ...highlightedStrings) {
+  let concattenated = '';
+  const highlightedRanges = [];
+
+  for (let i = 0; i < unhighlightedStrings.length; i++) {
+    concattenated += unhighlightedStrings[i]; // the two lists of strings may be uneven by one
+
+    if (highlightedStrings[i] != null) {
+      const start = concattenated.length;
+      concattenated += highlightedStrings[i];
+      highlightedRanges.push([start, concattenated.length]);
+    }
   }
 
   return {
     text: concattenated,
-    matchRanges: highlightedRanges };
-
+    matchRanges: highlightedRanges
+  };
 }

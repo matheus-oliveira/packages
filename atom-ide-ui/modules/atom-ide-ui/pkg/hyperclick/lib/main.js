@@ -1,22 +1,37 @@
-'use strict';var _UniversalDisposable;
+"use strict";
 
+function _UniversalDisposable() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons/UniversalDisposable"));
 
+  _UniversalDisposable = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _createPackage() {
+  const data = _interopRequireDefault(require("../../../../nuclide-commons-atom/createPackage"));
 
+  _createPackage = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _Hyperclick() {
+  const data = _interopRequireDefault(require("./Hyperclick"));
 
+  _Hyperclick = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-
-
-function _load_UniversalDisposable() {return _UniversalDisposable = _interopRequireDefault(require('../../../../nuclide-commons/UniversalDisposable'));}var _createPackage;
-function _load_createPackage() {return _createPackage = _interopRequireDefault(require('../../../../nuclide-commons-atom/createPackage'));}var _Hyperclick;
-function _load_Hyperclick() {return _Hyperclick = _interopRequireDefault(require('./Hyperclick'));}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-
-// Legacy providers have a default priority of 0.
 /**
  * Copyright (c) 2017-present, Facebook, Inc.
  * All rights reserved.
@@ -27,44 +42,49 @@ function _load_Hyperclick() {return _Hyperclick = _interopRequireDefault(require
  *
  * 
  * @format
- */function fixLegacyProvider(provider) {if (provider.priority == null) {provider.priority = 0;}return provider;}class Activation {
+ */
+// Legacy providers have a default priority of 0.
+function fixLegacyProvider(provider) {
+  if (provider.priority == null) {
+    provider.priority = 0;
+  }
+
+  return provider;
+}
+
+class Activation {
   constructor() {
-    this._hyperclick = new (_Hyperclick || _load_Hyperclick()).default();
-    this._disposables = new (_UniversalDisposable || _load_UniversalDisposable()).default(this._hyperclick);
+    this._hyperclick = new (_Hyperclick().default)();
+    this._disposables = new (_UniversalDisposable().default)(this._hyperclick);
   }
 
   dispose() {
     this._disposables.dispose();
+  } // Legacy providers have a default priority of 0.
+
+
+  addLegacyProvider(provider) {
+    return this.addProvider(Array.isArray(provider) ? provider.map(fixLegacyProvider) : fixLegacyProvider(provider));
   }
 
-  // Legacy providers have a default priority of 0.
-  addLegacyProvider(
-  provider)
-  {
-    return this.addProvider(
-    Array.isArray(provider) ?
-    provider.map(fixLegacyProvider) :
-    fixLegacyProvider(provider));
-
-  }
-
-  addProvider(
-  provider)
-  {
+  addProvider(provider) {
     const disposable = this._hyperclick.addProvider(provider);
+
     this._disposables.add(disposable);
+
     return disposable;
   }
-
   /**
-     * A TextEditor whose creation is announced via atom.workspace.observeTextEditors() will be
-     * observed by default by hyperclick. However, if a TextEditor is created via some other means,
-     * (such as a building block for a piece of UI), then it must be observed explicitly.
-     */
+   * A TextEditor whose creation is announced via atom.workspace.observeTextEditors() will be
+   * observed by default by hyperclick. However, if a TextEditor is created via some other means,
+   * (such as a building block for a piece of UI), then it must be observed explicitly.
+   */
+
+
   observeTextEditor() {
-    return textEditor =>
-    this._hyperclick.observeTextEditor(textEditor);
-  }}
+    return textEditor => this._hyperclick.observeTextEditor(textEditor);
+  }
 
+}
 
-(0, (_createPackage || _load_createPackage()).default)(module.exports, Activation);
+(0, _createPackage().default)(module.exports, Activation);

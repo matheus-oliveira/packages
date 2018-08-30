@@ -1,127 +1,137 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.TableExamples = undefined;
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.TableExamples = void 0;
 
+var React = _interopRequireWildcard(require("react"));
 
+function _Block() {
+  const data = require("./Block");
 
+  _Block = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _Table() {
+  const data = require("./Table");
 
+  _Table = function () {
+    return data;
+  };
 
+  return data;
+}
 
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ * @format
+ */
+const Highlight42Component = props => React.createElement("div", {
+  style: props.data === 42 ? {
+    fontWeight: 'bold'
+  } : {}
+}, props.data);
 
-var _react = _interopRequireWildcard(require('react'));var _Block;
-function _load_Block() {return _Block = require('./Block');}var _Table;
-function _load_Table() {return _Table = require('./Table');}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}
-
-const Highlight42Component = props =>
-_react.createElement('div', { style: props.data === 42 ? { fontWeight: 'bold' } : {} }, props.data); /**
-                                                                                                      * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                      * All rights reserved.
-                                                                                                      *
-                                                                                                      * This source code is licensed under the BSD-style license found in the
-                                                                                                      * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                      * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                      *
-                                                                                                      * 
-                                                                                                      * @format
-                                                                                                      */const TableExample = () => {const columns = [{ title: 'first column', key: 'first' }, { title: 'second column',
+const TableExample = () => {
+  const columns = [{
+    title: 'first column',
+    key: 'first'
+  }, {
+    title: 'second column',
     key: 'second',
-    component: Highlight42Component },
-
-  {
+    component: Highlight42Component
+  }, {
     title: 'third column',
-    key: 'third' },
-
-  {
+    key: 'third'
+  }, {
     title: 'fourth column',
-    key: 'fourth' },
-
-  {
+    key: 'fourth'
+  }, {
     title: 'fifth column',
-    key: 'fifth' }];
-
-
-  const rows = [
-  {
+    key: 'fifth'
+  }];
+  const rows = [{
     data: {
       first: 1,
       second: 2,
       third: 3,
       fourth: 33,
-      fifth: 123 } },
-
-
-  {
+      fifth: 123
+    }
+  }, {
     className: 'this-is-an-optional-classname',
     data: {
       first: 4,
       second: 42,
       third: 6,
       fourth: 66,
-      fifth: 123 } },
-
-
-  {
+      fifth: 123
+    }
+  }, {
     data: {
       first: 7,
       second: 42,
       third: undefined,
       fourth: 66,
-      fifth: 123 } }];
-
-
-
-  return (
-    _react.createElement((_Block || _load_Block()).Block, null,
-      _react.createElement((_Table || _load_Table()).Table, { columns: columns, rows: rows, selectable: true })));
-
-
+      fifth: 123
+    }
+  }];
+  return React.createElement(_Block().Block, null, React.createElement(_Table().Table, {
+    columns: columns,
+    rows: rows,
+    selectable: true
+  }));
 };
 
-class SortableTableExample extends _react.Component
-
-
-
-
-
-
-{
+class SortableTableExample extends React.Component {
   constructor(props) {
     super(props);
-    const rows = [
-    {
+    const rows = [{
       data: {
         first: 1,
         second: 3,
-        third: 300 } },
-
-
-    {
+        third: 300
+      }
+    }, {
       data: {
         first: 2,
         second: 5,
-        third: 200 } },
-
-
-    {
+        third: 200
+      }
+    }, {
       className: 'nuclide-ui-custom-classname-example',
       data: {
         first: 3,
         second: 4,
-        third: 100 } }];
-
-
-
+        third: 100
+      }
+    }];
     this.state = {
       sortDescending: false,
       sortedColumn: null,
-      rows };
-
+      rows
+    };
     this._handleSort = this._handleSort.bind(this);
   }
 
   _handleSort(sortedColumn, sortDescending) {
+    // TODO: (wbinnssmith) T30771435 this setState depends on current state
+    // and should use an updater function rather than an object
+    // eslint-disable-next-line react/no-access-state-in-setstate
     const sortedRows = this.state.rows.sort((obj1, obj2) => {
       const order = sortDescending ? -1 : 1;
       return order * (obj1.data[sortedColumn] - obj2.data[sortedColumn]);
@@ -129,78 +139,64 @@ class SortableTableExample extends _react.Component
     this.setState({
       rows: sortedRows,
       sortedColumn,
-      sortDescending });
-
+      sortDescending
+    });
   }
 
   render() {
-    const columns = [
-    {
+    const columns = [{
       title: 'first',
-      key: 'first' },
-
-    {
+      key: 'first'
+    }, {
       title: 'second',
-      key: 'second' },
-
-    {
+      key: 'second'
+    }, {
       title: 'third',
-      key: 'third' }];
+      key: 'third'
+    }];
+    return React.createElement(_Block().Block, null, React.createElement(_Table().Table, {
+      emptyComponent: () => React.createElement("div", null, "An optional, custom \"empty message\" component."),
+      columns: columns,
+      rows: this.state.rows,
+      sortable: true,
+      onSort: this._handleSort,
+      sortedColumn: this.state.sortedColumn,
+      sortDescending: this.state.sortDescending
+    }));
+  }
 
-
-    return (
-      _react.createElement((_Block || _load_Block()).Block, null,
-        _react.createElement((_Table || _load_Table()).Table, {
-          emptyComponent: () =>
-          _react.createElement('div', null, 'An optional, custom "empty message" component.'),
-
-          columns: columns,
-          rows: this.state.rows,
-          sortable: true,
-          onSort: this._handleSort,
-          sortedColumn: this.state.sortedColumn,
-          sortDescending: this.state.sortDescending })));
-
-
-
-  }}
-
+}
 
 const EmptyTableExample = () => {
-  const columns = [
-  {
+  const columns = [{
     title: 'first column',
-    key: 'first' },
-
-  {
+    key: 'first'
+  }, {
     title: 'second column',
-    key: 'second' },
-
-  {
+    key: 'second'
+  }, {
     title: 'third column',
-    key: 'third' }];
-
-
+    key: 'third'
+  }];
   const rows = [];
-  return (
-    _react.createElement((_Block || _load_Block()).Block, null,
-      _react.createElement((_Table || _load_Table()).Table, { columns: columns, rows: rows })));
-
-
+  return React.createElement(_Block().Block, null, React.createElement(_Table().Table, {
+    columns: columns,
+    rows: rows
+  }));
 };
 
-const TableExamples = exports.TableExamples = {
+const TableExamples = {
   sectionName: 'Table',
   description: '',
-  examples: [
-  {
+  examples: [{
     title: 'Simple Table',
-    component: TableExample },
-
-  {
+    component: TableExample
+  }, {
     title: 'Sortable Table',
-    component: SortableTableExample },
-
-  {
+    component: SortableTableExample
+  }, {
     title: 'Empty Table',
-    component: EmptyTableExample }] };
+    component: EmptyTableExample
+  }]
+};
+exports.TableExamples = TableExamples;

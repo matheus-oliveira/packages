@@ -1,55 +1,145 @@
-'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.getAdapterExecutableInfo = exports.getProcessTree = exports.VsRawAdapterSpawnerService = undefined;var _asyncToGenerator = _interopRequireDefault(require('async-to-generator'));let getProcessTree = exports.getProcessTree = (() => {var _ref = (0, _asyncToGenerator.default)(
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createVsRawAdapterSpawnerService = createVsRawAdapterSpawnerService;
+exports.getProcessTree = getProcessTree;
+exports.getBuckRootFromUri = getBuckRootFromUri;
+exports.getBuckRootFromPid = getBuckRootFromPid;
+exports.realpath = realpath;
+exports.getAdapterExecutableInfo = getAdapterExecutableInfo;
+exports.VsRawAdapterSpawnerService = void 0;
+
+function _process() {
+  const data = require("../nuclide-commons/process");
+
+  _process = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _VsAdapterSpawner() {
+  const data = _interopRequireDefault(require("./VsAdapterSpawner"));
+
+  _VsAdapterSpawner = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _debuggerRegistry() {
+  const data = require("./debugger-registry");
+
+  _debuggerRegistry = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _nuclideUri() {
+  const data = _interopRequireDefault(require("../nuclide-commons/nuclideUri"));
+
+  _nuclideUri = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _fsPromise() {
+  const data = _interopRequireDefault(require("../nuclide-commons/fsPromise"));
+
+  _fsPromise = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ *  strict-local
+ * @format
+ */
+class VsRawAdapterSpawnerService extends _VsAdapterSpawner().default {
+  spawnAdapter(adapter) {
+    return super.spawnAdapter(adapter);
+  }
+
+  write(input) {
+    return super.write(input);
+  }
+
+  dispose() {
+    return super.dispose();
+  }
+
+}
+
+exports.VsRawAdapterSpawnerService = VsRawAdapterSpawnerService;
+
+async function createVsRawAdapterSpawnerService() {
+  return new VsRawAdapterSpawnerService();
+}
+
+async function getProcessTree() {
+  return (0, _process().psTree)();
+}
+
+async function getBuckRootFromUri(uri) {
+  if (!_nuclideUri().default.isAbsolute(uri)) {
+    return null;
+  }
+
+  let path = uri;
+
+  while (true) {
+    const rootTest = _nuclideUri().default.join(path, '.buckconfig'); // eslint-disable-next-line no-await-in-loop
 
 
+    if (await _fsPromise().default.exists(rootTest)) {
+      return path;
+    }
 
+    const newPath = _nuclideUri().default.getParent(path);
 
+    if (newPath === path) {
+      break;
+    }
 
+    path = newPath;
+  }
 
+  return null;
+}
 
+async function getBuckRootFromPid(pid) {
+  const path = await (0, _process().getAbsoluteBinaryPathForPid)(pid);
 
+  if (path == null) {
+    return null;
+  }
 
+  return getBuckRootFromUri(path);
+}
 
+async function realpath(path) {
+  return _fsPromise().default.realpath(path);
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  function* () {
-    return (0, (_process || _load_process()).psTree)();
-  });return function getProcessTree() {return _ref.apply(this, arguments);};})();let getAdapterExecutableInfo = exports.getAdapterExecutableInfo = (() => {var _ref2 = (0, _asyncToGenerator.default)(
-
-  function* (
-  adapterType)
-  {
-    return (0, (_debuggerRegistry || _load_debuggerRegistry()).getAdapterExecutable)(adapterType);
-  });return function getAdapterExecutableInfo(_x) {return _ref2.apply(this, arguments);};})();var _process;function _load_process() {return _process = require('../nuclide-commons/process');}var _VsAdapterSpawner;function _load_VsAdapterSpawner() {return _VsAdapterSpawner = _interopRequireDefault(require('./VsAdapterSpawner'));}var _debuggerRegistry;function _load_debuggerRegistry() {return _debuggerRegistry = require('./debugger-registry');}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * Copyright (c) 2017-present, Facebook, Inc.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * All rights reserved.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * This source code is licensed under the BSD-style license found in the
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            *  strict-local
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @format
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */class VsRawAdapterSpawnerService extends (_VsAdapterSpawner || _load_VsAdapterSpawner()).default {spawnAdapter(adapter) {return super.spawnAdapter(adapter);}write(input) {return super.write(input);}dispose() {return super.dispose();}}exports.VsRawAdapterSpawnerService = VsRawAdapterSpawnerService;
+async function getAdapterExecutableInfo(adapterType) {
+  return (0, _debuggerRegistry().getAdapterExecutable)(adapterType);
+}
